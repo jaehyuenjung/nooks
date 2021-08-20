@@ -1,27 +1,24 @@
 import React, { useState, useEffect, useRef } from "react";
 
-const useBeforeLeave = (onBefore) => {
-    if (typeof onBefoe !== "function") {
-        return;
-    }
-    const handle = (event) => {
-        const { clientY } = event;
-        if (clientY <= 0) {
-            onBefore();
-        }
-    };
+const useFadeIn = (duration = 1, delay = 0) => {
+    const element = useRef();
     useEffect(() => {
-        document.addEventListener("mouseleave", handle);
-        return () => document.removeEventListener("mouseleave", handle);
+        const { current } = element;
+        if (current) {
+            current.style.transition = `opacity ${duration}s ease-in-out ${delay}s`;
+            current.style.opacity = 1;
+        }
     }, []);
+    return { ref: element, style: { opacity: 0 } };
 };
 
 const App = () => {
-    const begForLife = () => console.log("Pis don leave");
-    useBeforeLeave(begForLife);
+    const fadeInH1 = useEffect(1, 2);
+    const fadeInP = useEffect(5, 10);
     return (
         <div className="App">
-            <h1>Hello</h1>
+            <h1 {...fadeInH1}>Hello</h1>
+            <p {...fadeInP}>lorem ipsum lalalalala</p>
         </div>
     );
 };
