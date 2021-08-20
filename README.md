@@ -6,6 +6,8 @@ Collection of sexy React Hooks ready to install with NPM
 -   [x] useTabs
 -   [x] useTitle
 -   [x] useClick
+-   [x] useConfirm
+-   [x] usePreventLeave
 -   [ ] usePageLeave
 -   [ ] useFadeIn
 -   [ ] useFullscreen
@@ -13,6 +15,4 @@ Collection of sexy React Hooks ready to install with NPM
 -   [ ] useNetwork
 -   [ ] useNotification
 -   [ ] useScroll
--   [ ] usePreventLeave
--   [ ] useConfirm
 -   [ ] useAxios
