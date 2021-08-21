@@ -1,36 +1,32 @@
 import React, { useState, useEffect, useRef } from "react";
 
-const useFullscreen = (callback) => {
-    const element = useRef();
-    const triggerFull = () => {
-        if (element.current) {
-            element.current.requestFullscreen();
-            if (callback && typeof callback === "function") {
-                callback(true);
-            }
+const useNotification = (title, options) => {
+    if (!("Notification" in window)) {
+        return;
+    }
+    const fireNotif = () => {
+        if (Notification.permission !== "granted") {
+            Notification.requestPermission().then((permission) => {
+                if (permission === "granted") {
+                    new Notification(title, options);
+                } else {
+                    return;
+                }
+            });
+        } else {
+            new Notification(title, options);
         }
     };
-    const exitFull = () => {
-        document.exitFullscreen();
-        if (callback && typeof callback === "function") {
-            callback(false);
-        }
-    };
-    return { element, triggerFull, exitFull };
+    return fireNotif;
 };
 
 const App = () => {
-    const onFulls = (isFull) => {
-        console.log(isFull ? "we are full" : "we are small");
-    };
-    const { element, triggerFull, exitFull } = useFullscreen(onFulls);
+    const triggerNotif = useNotification("Can I steal your kimchi?", {
+        body: "I love kimchi don you",
+    });
     return (
         <div className="App" style={{ height: "1000vh" }}>
-            <div ref={element}>
-                <img src="https://i.ibb.co/R6RwNxx/grape.jpg" alt="empty" />
-                <button onClick={exitFull}>Exit fullscreen</button>
-            </div>
-            <button onClick={triggerFull}>Make fullscreen</button>
+            <button onClick={triggerNotif}>Hello</button>
         </div>
     );
 };
