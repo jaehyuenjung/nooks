@@ -1,15 +1,32 @@
 import React, { useState, useEffect, useRef } from "react";
-import useAxios from "./useAxios";
+
+const useHover = (callback) => {
+    const element = useRef(null);
+    useEffect(() => {
+        const { current } = element;
+        if (current) {
+            current.addEventListener("mouseover", callback);
+        }
+        return () => {
+            if (current) {
+                current.removeEventListener("mouseover", callback);
+            }
+        };
+    }, []);
+    return element;
+};
 
 const App = () => {
-    const { loading, data, refetch } = useAxios({
-        url: "https://yts.mx/api/v2/list_movies.json",
-    });
+    const [state, setState] = useState({ color: "red" });
+    const changeColor = () => {
+        setState({ ...state, color: "blue" });
+    };
+    const element = useHover(changeColor);
     return (
-        <div className="App" style={{ height: "1000vh" }}>
-            <h1>{data && data.status}</h1>
-            <h2>{loading && "Loading"}</h2>
-            <button onClick={refetch}>Refetch</button>
+        <div className="App">
+            <h1 ref={element} style={{ ...state }}>
+                Hello
+            </h1>
         </div>
     );
 };
