@@ -15,4 +15,5 @@ Collection of sexy React Hooks ready to install with NPM
 -   [x] useFullscreen
 -   [x] useNotification
 -   [x] useAxios
--   [ ] useHover
+-   [x] useHover
+-   [x] useGraph
